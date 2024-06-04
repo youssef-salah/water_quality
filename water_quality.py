@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 
 app = Flask(__name__)
-quality_predict = joblib.load('Water_Quality2.joblib')
+quality_predict = joblib.load('Water_Quality6.joblib')
 
 @app.route('/water_quality', methods=['POST', 'GET'])
 def handle_data():
