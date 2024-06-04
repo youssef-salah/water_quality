@@ -3,9 +3,9 @@ import joblib
 import pandas as pd
 
 app = Flask(__name__)
-regr_energy = joblib.load('Water_Quality.joblib')
+quality = joblib.load('Water_Quality.joblib')
 
-@app.route('/wind', methods=['POST', 'GET'])
+@app.route('/water_quality', methods=['POST', 'GET'])
 def handle_data():
    try :
 
@@ -23,11 +23,11 @@ def handle_data():
          jdata_df = pd.DataFrame([jdata])
 # Create DataFrame with the received data
       
-      predicted_water_quality = regr_energy.predict(jdata_df)
+      predicted_water_quality = quality.predict(jdata_df)
       predicted_water_quality = predicted_water_quality.tolist()
 
 # Create response with CORS headers
-      response = make_response(jsonify({'predicted_wind_energy': predicted_water_quality[0]}))
+      response = make_response(jsonify({'predicted_water_quality': predicted_water_quality[0]}))
       response.headers['Access-Control-Allow-Origin'] = '*'
       response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
       response.headers['Access-Control-Allow-Methods'] = 'GET, POST'
