@@ -2,6 +2,7 @@
 from flask import Flask, request, jsonify, make_response
 import joblib
 import pandas as pd
+import numpy as np
 
 app = Flask(__name__)
 quality_predict = joblib.load('Water_Quality2.joblib')
@@ -16,10 +17,11 @@ def handle_data():
          
       elif request.method == 'GET':
    # Get parameters from query string
-         params = ["ph", "Hardness","Solids"
+         data = ["ph", "Hardness","Solids"
                    ,"Chloramines" , "Sulfate" ,
                      "Conductivity" , "Organic_carbon" ,
                      "Trihalomethanes" , "Turbidity"]
+         params = np.array(data)
          jdata = {param : float (request.args.get(param , 0)) for param in params}
          jdata_df = pd.DataFrame([jdata])
 # Create DataFrame with the received data
@@ -28,7 +30,7 @@ def handle_data():
       predicted_water_quality = predicted_water_quality.tolist()
 
 # Create response with CORS headers
-      response = make_response(jsonify({'predicted_water_quality': predicted_water_quality[0]}))
+      response = make_response(jsonify({'Potability': predicted_water_quality[0]}))
       response.headers['Access-Control-Allow-Origin'] = '*'
       response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
       response.headers['Access-Control-Allow-Methods'] = 'GET, POST'
@@ -42,7 +44,6 @@ def handle_data():
 
 if __name__ == '__main__':
  app.run(debug=True, host='0.0.0.0', port=3000)
-
 
 
 
