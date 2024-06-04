@@ -1,9 +1,10 @@
+
 from flask import Flask, request, jsonify, make_response
 import joblib
 import pandas as pd
 
 app = Flask(__name__)
-quality = joblib.load('Water_Quality2.joblib')
+quality_predict = joblib.load('Water_Quality2.joblib')
 
 @app.route('/water_quality', methods=['POST', 'GET'])
 def handle_data():
@@ -23,7 +24,7 @@ def handle_data():
          jdata_df = pd.DataFrame([jdata])
 # Create DataFrame with the received data
       
-      predicted_water_quality = quality.predict(jdata_df)
+      predicted_water_quality = quality_predict.predict(jdata_df)
       predicted_water_quality = predicted_water_quality.tolist()
 
 # Create response with CORS headers
@@ -41,3 +42,7 @@ def handle_data():
 
 if __name__ == '__main__':
  app.run(debug=True, host='0.0.0.0', port=3000)
+
+
+
+
