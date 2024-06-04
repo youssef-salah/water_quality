@@ -18,7 +18,7 @@ def handle_data():
          params = ["ph", "Hardness","Solids"
                    ,"Chloramines" , "Sulfate" ,
                      "Conductivity" , "Organic_carbon" ,
-                     "Trihalomethanes" , " Turbidity"]
+                     "Trihalomethanes" , "Turbidity"]
          jdata = {param : float (request.args.get(param , 0)) for param in params}
          jdata_df = pd.DataFrame([jdata])
 # Create DataFrame with the received data
