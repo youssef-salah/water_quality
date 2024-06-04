@@ -5,27 +5,27 @@ import pandas as pd
 import numpy as np
 
 app = Flask(__name__)
-quality_predict = joblib.load('Water_Quality6.joblib')
+quality_predict = joblib.load('Water_Quality_final.joblib')
+print(type(quality_predict))
 
-@app.route('/water_quality', methods=['POST', 'GET'])
+@app.route('/', methods=['POST', 'GET'])
 def handle_data():
-   try :
+   try:
 
       if request.method == 'POST':
          jdata = request.json
          jdata_df = pd.DataFrame([jdata])
          
       elif request.method == 'GET':
-   # Get parameters from query string
-         data = ["ph", "Hardness","Solids"
+         # Get parameters from query string
+         params = ["ph", "Hardness","Solids"
                    ,"Chloramines" , "Sulfate" ,
                      "Conductivity" , "Organic_carbon" ,
                      "Trihalomethanes" , "Turbidity"]
-         params = np.array(data)
          jdata = {param : float (request.args.get(param , 0)) for param in params}
          jdata_df = pd.DataFrame([jdata])
-# Create DataFrame with the received data
-      
+
+      # Call predict on the model, reshape for single sample
       predicted_water_quality = quality_predict.predict(jdata_df)
       predicted_water_quality = predicted_water_quality.tolist()
 
