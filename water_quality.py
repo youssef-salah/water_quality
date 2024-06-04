@@ -8,7 +8,7 @@ app = Flask(__name__)
 quality_predict = joblib.load('Water_Quality_final.joblib')
 print(type(quality_predict))
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/water_quality', methods=['POST', 'GET'])
 def handle_data():
    try:
 
