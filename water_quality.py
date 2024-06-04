@@ -3,7 +3,7 @@ import joblib
 import pandas as pd
 
 app = Flask(__name__)
-quality = joblib.load('Water_Quality.joblib')
+quality = joblib.load('Water_Quality2.joblib')
 
 @app.route('/water_quality', methods=['POST', 'GET'])
 def handle_data():
